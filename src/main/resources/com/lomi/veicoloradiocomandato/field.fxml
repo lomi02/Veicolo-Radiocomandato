@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.lomi.veicoloradiocomandato.Gioco.GameField"
+           fx:id="GameField">
+    <Rectangle fx:id="prato" width="800" height="600" fill="GREEN"/>
+    <Rectangle fx:id="strada" width="200" height="600" fill="GRAY"/>
+</StackPane>

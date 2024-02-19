@@ -27,7 +27,7 @@ tasks.withType(JavaCompile).configureEach {
 
 application {
   mainModule = 'com.lomi.veicoloradiocomandato'
-  mainClass = 'com.lomi.veicoloradiocomandato.HelloApplication'
+  mainClass = 'com.lomi.veicoloradiocomandato.Gioco.Gioco'
 }
 
 javafx {
@@ -52,6 +52,8 @@ dependencies {
     exclude(group: 'org.openjfx')
     exclude(group: 'org.jetbrains.kotlin')
   }
+
+  implementation 'org.json:json:20231013'
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

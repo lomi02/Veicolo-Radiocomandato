@@ -1,0 +1,61 @@
+{
+  "veicoli": [
+    {
+      "codice": "V001",
+      "tipo": "auto",
+      "marca": "Ferrari",
+      "frequenza": 2.4,
+      "luci": {
+        "anteriori": false,
+        "posteriori": false
+      },
+      "sensori": {
+        "crepuscolare": false,
+        "prossimita": {
+          "destra": false,
+          "sinistra": false
+        }
+      },
+      "telecamera": false,
+      "ostacoli": []
+    },
+    {
+      "codice": "V002",
+      "tipo": "moto",
+      "marca": "Ducati",
+      "frequenza": 2.4,
+      "luci": {
+        "anteriori": false,
+        "posteriori": false
+      },
+      "sensori": {
+        "crepuscolare": false,
+        "prossimita": {
+          "destra": false,
+          "sinistra": false
+        }
+      },
+      "telecamera": false,
+      "ostacoli": []
+    },
+    {
+      "codice": "V003",
+      "tipo": "camion",
+      "marca": "Mercedes",
+      "frequenza": 2.4,
+      "luci": {
+        "anteriori": false,
+        "posteriori": false
+      },
+      "sensori": {
+        "crepuscolare": false,
+        "prossimita": {
+          "destra": false,
+          "sinistra": false
+        }
+      },
+      "telecamera": false,
+      "ostacoli": []
+    }
+  ]
+}

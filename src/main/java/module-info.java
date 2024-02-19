@@ -10,7 +10,9 @@ module com.lomi.veicoloradiocomandato {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires org.json;
+    requires java.logging;
 
     opens com.lomi.veicoloradiocomandato to javafx.fxml;
-    exports com.lomi.veicoloradiocomandato;
+    opens com.lomi.veicoloradiocomandato.Gioco to javafx.fxml, javafx.graphics;
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.lomi.veicoloradiocomandato.Gioco.UI" fx:id="ui" spacing="10">
+    <Button fx:id="autoButton" text="Auto"/>
+    <Button fx:id="motoButton" text="Moto"/>
+    <Button fx:id="camionButton" text="Camion"/>
+</VBox>
