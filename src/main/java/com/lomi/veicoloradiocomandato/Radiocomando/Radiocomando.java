@@ -4,12 +4,12 @@ import com.lomi.veicoloradiocomandato.Vehicle.Veicolo;
 
 public class Radiocomando implements Observer {
     private Veicolo veicolo;
-    public void scegliVeicolo(Veicolo veicolo) {}
 
-    public void cambiaVeicolo() {}
-    public void accendiLuci() {}
-    public void spegniLuci() {}
-    public void scattaFoto() {}
+    public void manubrio() {}
+    public void acceleratore() {}
+    public void marce() {}
+    public void freno() {}
+    public void scegliVeicolo(Veicolo veicolo) {}
 
     @Override
     public void update(String evento) {

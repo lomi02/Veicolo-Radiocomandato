@@ -1,29 +1,30 @@
 package com.lomi.veicoloradiocomandato.Gioco;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class DayNightCycle {
-    private final Rectangle background;
+public abstract class DayNightCycle {
 
-    public DayNightCycle() {
-        background = new Rectangle(800, 600);
-        background.setFill(Color.GREEN);
+    protected Rectangle rectangle;
+    private static final Logger LOGGER = Logger.getLogger(DayNightCycle.class.getName());
 
-        Timeline dayNightCycle = new Timeline(
-                new KeyFrame(Duration.seconds(0), new KeyValue(background.fillProperty(), Color.GREEN)),
-                new KeyFrame(Duration.seconds(10), new KeyValue(background.fillProperty(), Color.BLACK)),
-                new KeyFrame(Duration.seconds(20), new KeyValue(background.fillProperty(), Color.GREEN))
-        );
-        dayNightCycle.setCycleCount(Timeline.INDEFINITE);
-        dayNightCycle.play();
+    protected FXMLLoader loadFXML(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(DayNightCycle.class.getResource(fxml));
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load " + fxml, e);
+            throw new RuntimeException("Failed to load " + fxml, e);
+        }
+        return fxmlLoader;
     }
 
-    public Rectangle getBackground() {
-        return background;
+    protected abstract void initializeDayNightCycle();
+
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 }

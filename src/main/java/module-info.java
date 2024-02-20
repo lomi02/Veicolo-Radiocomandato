@@ -13,6 +13,6 @@ module com.lomi.veicoloradiocomandato {
     requires org.json;
     requires java.logging;
 
-    opens com.lomi.veicoloradiocomandato to javafx.fxml;
     opens com.lomi.veicoloradiocomandato.Gioco to javafx.fxml, javafx.graphics;
+    opens com.lomi.veicoloradiocomandato.Ostacoli to javafx.fxml, javafx.graphics;
 }

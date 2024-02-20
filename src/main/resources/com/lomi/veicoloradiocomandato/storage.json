@@ -16,8 +16,7 @@
           "sinistra": false
         }
       },
-      "telecamera": false,
-      "ostacoli": []
+      "telecamera": false
     },
     {
       "codice": "V002",
@@ -35,8 +34,7 @@
           "sinistra": false
         }
       },
-      "telecamera": false,
-      "ostacoli": []
+      "telecamera": false
     },
     {
       "codice": "V003",
@@ -54,8 +52,37 @@
           "sinistra": false
         }
       },
-      "telecamera": false,
-      "ostacoli": []
+      "telecamera": false
+    }
+  ],
+  "ostacoli": [
+    {
+      "nome_src": "cone",
+      "nome": "",
+      "immagine": "/com/lomi/veicoloradiocomandato/img/cone.png",
+      "collisione": {}
+    },
+    {
+      "nome_src": "hole",
+      "nome": "",
+      "immagine": "/com/lomi/veicoloradiocomandato/img/hole.jpeg",
+      "collisione": {}
+    },
+    {
+      "nome_src": "oil",
+      "nome": "",
+      "immagine": "/com/lomi/veicoloradiocomandato/img/oil.jpg",
+      "collisione": {}
+    },
+    {
+      "nome_src": "roadblock",
+      "immagine": "/com/lomi/veicoloradiocomandato/img/roadblock.png",
+      "collisione": {}
+    },
+    {
+      "nome_src": "tree",
+      "immagine": "/com/lomi/veicoloradiocomandato/img/tree.jpg",
+      "collisione": {}
     }
   ]
 }
