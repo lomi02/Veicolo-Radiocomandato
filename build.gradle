@@ -53,6 +53,10 @@ dependencies {
     exclude(group: 'org.jetbrains.kotlin')
   }
 
+  implementation 'org.slf4j:slf4j-api:1.7.30'
+  runtimeOnly 'org.slf4j:slf4j-simple:1.7.30'
+
+  implementation 'org.xerial:sqlite-jdbc:3.44.1.0'
   implementation 'org.json:json:20231013'
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

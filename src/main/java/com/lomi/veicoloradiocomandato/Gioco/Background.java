@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class Background extends DayNightCycle {
     private static final Logger LOGGER = Logger.getLogger(Background.class.getName());
     private static final String BACKGROUND_FXML_PATH = "/com/lomi/veicoloradiocomandato/background.fxml";
+
     public Background() {
         try {
             FXMLLoader fxmlLoader = super.loadFXML(BACKGROUND_FXML_PATH);
@@ -32,8 +33,10 @@ public class Background extends DayNightCycle {
     protected void initializeDayNightCycle() {
         Timeline dayNightCycle = new Timeline(
                 new KeyFrame(Duration.seconds(0), new KeyValue(rectangle.fillProperty(), Color.GREEN)),
-                new KeyFrame(Duration.seconds(10), new KeyValue(rectangle.fillProperty(), Color.BLACK)),
-                new KeyFrame(Duration.seconds(20), new KeyValue(rectangle.fillProperty(), Color.GREEN))
+                new KeyFrame(Duration.seconds(10), new KeyValue(rectangle.fillProperty(), Color.GREEN)),
+                new KeyFrame(Duration.seconds(15), new KeyValue(rectangle.fillProperty(), Color.BLACK)),
+                new KeyFrame(Duration.seconds(25), new KeyValue(rectangle.fillProperty(), Color.BLACK)),
+                new KeyFrame(Duration.seconds(30), new KeyValue(rectangle.fillProperty(), Color.GREEN))
         );
 
         dayNightCycle.setCycleCount(Timeline.INDEFINITE);

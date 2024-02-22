@@ -1,11 +1,9 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class Tree extends Obstacle {
-    public Tree(JSONObject jsonObject) throws FileNotFoundException {
-        super(jsonObject.get("immagine").toString());
+    public Tree(String nome, String immagine, String collisione) throws SQLException {
+        super(nome, immagine, collisione);
     }
 }

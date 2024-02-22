@@ -1,11 +1,9 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class Oil extends Obstacle {
-    public Oil(JSONObject jsonObject) throws FileNotFoundException {
-        super(jsonObject.get("immagine").toString());
+    public Oil(String nome, String immagine, String collisione) throws SQLException {
+        super(nome, immagine, collisione);
     }
 }

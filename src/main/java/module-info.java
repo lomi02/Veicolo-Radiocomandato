@@ -12,6 +12,7 @@ module com.lomi.veicoloradiocomandato {
     requires com.almasb.fxgl.all;
     requires org.json;
     requires java.logging;
+    requires java.sql;
 
     opens com.lomi.veicoloradiocomandato.Gioco to javafx.fxml, javafx.graphics;
     opens com.lomi.veicoloradiocomandato.Ostacoli to javafx.fxml, javafx.graphics;

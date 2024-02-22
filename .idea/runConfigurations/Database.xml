@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Database" type="DatabaseScript">
+    <script-file value="$PROJECT_DIR$/SQL/VR.sql" />
+    <script-file value="$PROJECT_DIR$/SQL/VR_Popolamento.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="c9fa0c32-fae1-4436-9681-f0a997e9f709" namespace="schema/&quot;main&quot;" />
+    <method v="2" />
+  </configuration>
+</component>

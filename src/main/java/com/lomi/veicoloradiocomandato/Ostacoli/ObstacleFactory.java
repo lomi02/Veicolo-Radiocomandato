@@ -1,17 +1,46 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
-import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ObstacleFactory {
-    public static Obstacle creaOstacolo(String nome_src, JSONObject jsonObject) throws FileNotFoundException {
-        return switch (nome_src) {
-            case "cone" -> new Cone(jsonObject);
-            case "hole" -> new Hole(jsonObject);
-            case "oil" -> new Oil(jsonObject);
-            case "roadblock" -> new Roadblock(jsonObject);
-            case "tree" -> new Tree(jsonObject);
-            default -> throw new IllegalArgumentException("Tipo di veicolo non supportato");
-        };
+
+    // Logger per raccogliere eventi/errori in questa classe
+    private static final Logger LOGGER = Logger.getLogger(ObstacleFactory.class.getName());
+
+    // Metodo statico per creare un oggetto Obstacle basato su parametri specifici
+    public static Obstacle creaOstacolo(String nome_src, String nome, String immagine, String collisione) throws SQLException {
+        try {
+
+            // Switch basato su 'nome_src' per determinare il tipo di ostacolo da creare
+            return switch (nome_src) {
+
+                // Se 'nome_src' è "cone", crea un nuovo oggetto Cone
+                case "cone" -> new Cone(nome, immagine, collisione);
+
+                // Se 'nome_src' è "hole", crea un nuovo oggetto Hole
+                case "hole" -> new Hole(nome, immagine, collisione);
+
+                // Se 'nome_src' è "oil", crea un nuovo oggetto Oil
+                case "oil" -> new Oil(nome, immagine, collisione);
+
+                // Se 'nome_src' è "roadblock", crea un nuovo oggetto Roadblock
+                case "roadblock" -> new Roadblock(nome, immagine, collisione);
+
+                // Se 'nome_src' è "tree", crea un nuovo oggetto Tree
+                case "tree" -> new Tree(nome, immagine, collisione);
+
+                // Se 'nome_src' non corrisponde a nessuno dei precedenti, lancia un'eccezione IllegalArgumentException
+                default -> throw new IllegalArgumentException();
+            };
+        } catch (IllegalArgumentException e) {
+
+            // Registra un errore grave se il 'nome_src' non corrisponde a nessuno dei tipi di ostacolo supportati.
+            LOGGER.log(Level.SEVERE, "Tipo di ostacolo non supportato", e);
+
+            // Ritorna null se si verifica un'eccezione
+            return null;
+        }
     }
 }

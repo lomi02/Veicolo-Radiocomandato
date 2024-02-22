@@ -1,11 +1,9 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class Hole extends Obstacle {
-    public Hole(JSONObject jsonObject) throws FileNotFoundException {
-        super(jsonObject.get("immagine").toString());
+    public Hole(String nome, String immagine, String collisione) throws SQLException {
+        super(nome, immagine, collisione);
     }
 }

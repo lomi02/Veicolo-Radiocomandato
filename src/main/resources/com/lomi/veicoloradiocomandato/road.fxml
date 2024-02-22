@@ -5,13 +5,13 @@
 <GridPane fx:controller="com.lomi.veicoloradiocomandato.Gioco.RoadController" fx:id="road"
           xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <!-- Corsia 1 -->
-    <Rectangle fx:id="lane1" width="60" height="800" fill="#AAAAAA" GridPane.columnIndex="1"/>
+    <Rectangle fx:id="lane1" width="70" height="800" fill="#AAAAAA" GridPane.columnIndex="1"/>
     <!-- Linea 1 -->
     <Rectangle width="2" height="800" fill="#FFFFFF" GridPane.columnIndex="2"/>
     <!-- Corsia 2 -->
-    <Rectangle fx:id="lane2" width="60" height="800" fill="#AAAAAA" GridPane.columnIndex="3"/>
+    <Rectangle fx:id="lane2" width="70" height="800" fill="#AAAAAA" GridPane.columnIndex="3"/>
     <!-- Linea 2 -->
     <Rectangle width="2" height="800" fill="#FFFFFF" GridPane.columnIndex="4"/>
     <!-- Corsia 3 -->
-    <Rectangle fx:id="lane3" width="60" height="800" fill="#AAAAAA" GridPane.columnIndex="5"/>
+    <Rectangle fx:id="lane3" width="70" height="800" fill="#AAAAAA" GridPane.columnIndex="5"/>
 </GridPane>

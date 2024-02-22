@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.image.ImageView?>
-<ImageView fx:id="obstacle" fitHeight="100" fitWidth="100"
-           image="your/image/path.png" xmlns:fx="http://javafx.com/fxml"/>
+
+<ImageView
+        fx:id="obstacle"
+        fitHeight="70"
+        fitWidth="70"
+        xmlns:fx="http://javafx.com/fxml"
+/>

@@ -1,11 +1,9 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
+import java.sql.SQLException;
 
 public class Roadblock extends Obstacle {
-    public Roadblock(JSONObject jsonObject) throws FileNotFoundException {
-        super(jsonObject.get("immagine").toString());
+    public Roadblock(String nome, String immagine, String collisione) throws SQLException {
+        super(nome, immagine, collisione);
     }
 }

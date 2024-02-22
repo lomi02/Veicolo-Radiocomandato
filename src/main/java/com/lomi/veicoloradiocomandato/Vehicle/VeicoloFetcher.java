@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GestoreVeicoli {
-    private static final Logger LOGGER = Logger.getLogger(GestoreVeicoli.class.getName());
+public class VeicoloFetcher {
+    private static final Logger LOGGER = Logger.getLogger(VeicoloFetcher.class.getName());
     List<Veicolo> veicoli = new ArrayList<>();
 
-    public GestoreVeicoli(String jsonFilePath) {
+    public VeicoloFetcher(String jsonFilePath) {
         try {
 
             String content = new String(Files.readAllBytes(Paths.get(jsonFilePath)));

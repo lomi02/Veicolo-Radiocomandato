@@ -1,11 +1,7 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-
 public class Cone extends Obstacle {
-    public Cone(JSONObject jsonObject) throws FileNotFoundException {
-        super(jsonObject.get("immagine").toString());
+    public Cone(String nome, String immagine, String collisione) {
+        super(nome, immagine, collisione);
     }
 }
