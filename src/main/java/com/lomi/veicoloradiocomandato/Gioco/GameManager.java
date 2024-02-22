@@ -9,10 +9,18 @@ public class GameManager {
     private final GameField gameField;
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
-    public GameManager() {
+    public GameManager(String chosenVehicle) {
         try {
             this.radiocomando = new Radiocomando();
-            this.gameField = new GameField();
+
+            // Try-catch block around creation of GameField
+            try {  // [AGGIUNTO]
+                this.gameField = new GameField(chosenVehicle);
+            } catch(Exception e){
+                LOGGER.log(Level.SEVERE, "Failed to create GameField.", e);
+                throw new RuntimeException("Failed to create GameField.", e);
+            }  // [AGGIUNTO]
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to create GameManager.", e);
             throw new RuntimeException("Failed to create GameManager.", e);

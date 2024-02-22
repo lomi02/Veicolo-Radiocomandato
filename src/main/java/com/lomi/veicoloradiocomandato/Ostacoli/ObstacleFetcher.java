@@ -24,10 +24,10 @@ public class ObstacleFetcher {
     public ObstacleFetcher() {
 
         // Il costruttore chiama il metodo per caricare gli ostacoli dal database SQLite
-        loadObstaclesFromDB();
+        loadObstaclesFromDatabase();
     }
 
-    private void loadObstaclesFromDB() {
+    private void loadObstaclesFromDatabase() {
 
         // Oggetto Connection per SQLite
         Connection connection = null;

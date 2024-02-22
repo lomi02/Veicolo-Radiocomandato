@@ -56,8 +56,8 @@ public class VeicoloFetcher {
                         resultSet.getString("MARCA"),
                         resultSet.getDouble("FREQUENZA"),
                         resultSet.getString("COLORE"),
-                        resultSet.getString("URL"),
-                        resultSet.getString("COLLISION"));
+                        resultSet.getString("URL_IMMAGINE"),
+                        resultSet.getString("COLLISIONE"));
                 try {
 
                     // Aggiunge l'oggetto Obstacle creato alla lista
@@ -86,6 +86,15 @@ public class VeicoloFetcher {
                 LOGGER.log(Level.SEVERE, "Errore nella chiusura della connessione al database SQLite", ex);
             }
         }
+    }
+
+    public Veicolo getVeicoloPerMarca(String marca) {
+        for (Veicolo veicolo : veicoli) {
+            if (veicolo.getMarca().equals(marca)) {
+                return veicolo;
+            }
+        }
+        return null;
     }
 
     // Metodo getter per fornire accesso esterno alla lista degli oggetti veicolo

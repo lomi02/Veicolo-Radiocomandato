@@ -29,7 +29,7 @@ public class ObstacleManager {
 
         try {
             Obstacle obstacle = getRandomObstacle(random);
-            ImageView obstacleView = obstacle.getImmagine();
+            ImageView obstacleView = obstacle.getObstacleImage();
             int lane = roadController.getRandomLane(random);
 
             placeObstacleInView(obstacleView, lane);

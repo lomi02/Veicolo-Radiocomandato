@@ -2,6 +2,8 @@ package com.lomi.veicoloradiocomandato.Gioco;
 
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
+import com.lomi.veicoloradiocomandato.Vehicle.VeicoloFetcher;
+import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -19,30 +21,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Road extends DayNightCycle {
-
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
+
+    // Added fields to store objects to be used in other methods.
+    // Using fields instead of local variables allow better error checking.
+    // [AGGIUNTO]
+    private final ObstacleManager obstacleManager;
+    private final VeicoloManager vehicleManager;
+    // [AGGIUNTO]
+
     private GridPane road;
     private Rectangle lane1;
     private Rectangle lane2;
     private Rectangle lane3;
     private static final int[] lanes = {1, 3, 5};
 
-    public Road() {
+    public Road(String chosenVehicle) {
         try {
             initializeFXML();
             initializeDayNightCycle();
 
             ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
-            ObstacleManager obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this);
+            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this);
+            VeicoloFetcher vehicleFetcher = new VeicoloFetcher();
+            this.vehicleManager = new VeicoloManager(road, vehicleFetcher.getVeicoli(), chosenVehicle, this);
 
-            new Timer().schedule(new TimerTask(){
+            new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     Platform.runLater(() -> obstacleManager.spawnObstacle(new Random()));
+                    Platform.runLater(() -> vehicleManager.spawnVeicolo(chosenVehicle));
                 }
             }, 0, 3000);
-
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to create Road.", e);
             throw new RuntimeException("Failed to create Road.", e);

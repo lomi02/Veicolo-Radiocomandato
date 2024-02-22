@@ -52,7 +52,7 @@ public abstract class Obstacle {
     }
 
     // Metodo getter per fornire accesso esterno all'ImageView dell'ostacolo
-    public ImageView getImmagine() {
+    public ImageView getObstacleImage() {
         try {
             // Carica il file FXML per l'ostacolo
             FXMLLoader loader = new FXMLLoader(getClass().getResource(OBSTACLE_FXML_PATH));
