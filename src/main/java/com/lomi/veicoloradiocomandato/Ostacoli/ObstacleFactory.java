@@ -17,19 +17,19 @@ public class ObstacleFactory {
             return switch (nome_src) {
 
                 // Se 'nome_src' è "cone", crea un nuovo oggetto Cone
-                case "cone" -> new Cone(nome, immagine, collisione);
+                case "CONE" -> new Cone(nome, immagine, collisione);
 
                 // Se 'nome_src' è "hole", crea un nuovo oggetto Hole
-                case "hole" -> new Hole(nome, immagine, collisione);
+                case "HOLE" -> new Hole(nome, immagine, collisione);
 
                 // Se 'nome_src' è "oil", crea un nuovo oggetto Oil
-                case "oil" -> new Oil(nome, immagine, collisione);
+                case "OIL" -> new Oil(nome, immagine, collisione);
 
                 // Se 'nome_src' è "roadblock", crea un nuovo oggetto Roadblock
-                case "roadblock" -> new Roadblock(nome, immagine, collisione);
+                case "ROADBLOCK" -> new Roadblock(nome, immagine, collisione);
 
                 // Se 'nome_src' è "tree", crea un nuovo oggetto Tree
-                case "tree" -> new Tree(nome, immagine, collisione);
+                case "TREE" -> new Tree(nome, immagine, collisione);
 
                 // Se 'nome_src' non corrisponde a nessuno dei precedenti, lancia un'eccezione IllegalArgumentException
                 default -> throw new IllegalArgumentException();

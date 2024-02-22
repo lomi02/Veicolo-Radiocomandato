@@ -52,14 +52,14 @@ public class ObstacleFetcher {
             while (resultSet.next()) {
 
                 // Ottiene il valore 'nome_src' dalla riga
-                String nome_src = resultSet.getString("nome_src");
+                String nome_src = resultSet.getString("NOME_SRC");
 
                 // Chiama il metodo di fabbrica per creare un oggetto Obstacle dai valori della riga
                 Obstacle ostacolo = ObstacleFactory.creaOstacolo(
                         nome_src,
-                        resultSet.getString("nome"),
-                        resultSet.getString("immagine"),
-                        resultSet.getString("collisione"));
+                        resultSet.getString("NOME"),
+                        resultSet.getString("URL_IMMAGINE"),
+                        resultSet.getString("COLLISIONE"));
                 try {
 
                     // Aggiunge l'oggetto Obstacle creato alla lista

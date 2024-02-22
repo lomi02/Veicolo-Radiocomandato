@@ -1,26 +1,24 @@
 package com.lomi.veicoloradiocomandato.Vehicle;
 
-import org.json.JSONObject;
-
 public abstract class VeicoloData {
     private final String codice;
-    private final String tipo;
     private final String marca;
     private final double frequenza;
+    private final String colore;
+    private final String urlImmagine;
+    private final String collisione;
 
-    public VeicoloData(JSONObject jsonObject) {
-        this.codice = jsonObject.getString("codice");
-        this.tipo = jsonObject.getString("tipo");
-        this.marca = jsonObject.getString("marca");
-        this.frequenza = jsonObject.getDouble("frequenza");
+    public VeicoloData(String codice, String marca, double frequenza, String colore, String url, String collisione) {
+        this.codice = codice;
+        this.marca = marca;
+        this.frequenza = frequenza;
+        this.colore = colore;
+        this.urlImmagine = url;
+        this.collisione = collisione;
     }
 
     public String getCodice() {
         return codice;
-    }
-
-    public String getTipo() {
-        return tipo;
     }
 
     public String getMarca() {
@@ -29,5 +27,17 @@ public abstract class VeicoloData {
 
     public double getFrequenza() {
         return frequenza;
+    }
+
+    public String getColore() {
+        return colore;
+    }
+
+    public String getUrl() {
+        return urlImmagine;
+    }
+
+    public String getCollisione() {
+        return collisione;
     }
 }
