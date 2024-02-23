@@ -1,9 +1,6 @@
 package com.lomi.veicoloradiocomandato.Gioco;
 
-import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
-import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
 import com.lomi.veicoloradiocomandato.Scena.Road;
-import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -13,27 +10,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gioco extends Application {
+    private GameManagerInterface gameManager;
     private static final Logger LOGGER = Logger.getLogger(Gioco.class.getName());
-    private final ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
+
+    public Gioco() {
+    }
+
+    @Override
+    public void init() {
+        this.gameManager = new GameManager();
+    }
 
     @Override
     public void start(Stage stage) {
         try {
-            Optional<String> result = Menu.showVehicleSelection();
+            VehicleSelector vehicleSelector = new VehicleSelector();
+            Optional<String> selectVehicle = vehicleSelector.selectVehicle();
 
-            if (result.isPresent()) {
+            if (selectVehicle.isPresent()) {
+                String chosenVehicle = selectVehicle.get();
+                new Road(chosenVehicle, gameManager);
 
-                String chosenVehicle = result.get();
-                Road road = new Road(chosenVehicle);
-                ObstacleManager obstacleManager = new ObstacleManager(road.getRoad(),
-                        obstacleFetcher.getObstacles(),
-                        road,
-                        new VeicoloManager(road.getRoad()), null);
-                GameManager gameManager = GameManager.getInstance(chosenVehicle, obstacleManager);
-                obstacleManager.setGameManager(gameManager);
                 stage.setTitle("Veicolo Radiocomandato");
                 stage.setScene(gameManager.getGameField().getScene());
-
                 stage.show();
             } else {
                 LOGGER.log(Level.INFO, "L'utente non ha scelto un veicolo. Uscita dal gioco.");

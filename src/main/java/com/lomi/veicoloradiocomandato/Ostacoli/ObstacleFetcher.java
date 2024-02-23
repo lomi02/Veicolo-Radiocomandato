@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,15 +32,16 @@ public class ObstacleFetcher {
 
             while (resultSet.next()) {
                 String nome_src = resultSet.getString("NOME_SRC");
-                Obstacle ostacolo = ObstacleFactory.creaOstacolo(
+                Optional<Obstacle> ostacoloOpt = ObstacleFactory.creaOstacolo(
                         nome_src,
                         resultSet.getString("NOME"),
                         resultSet.getString("URL_IMMAGINE"),
                         resultSet.getString("COLLISIONE"));
-                try {
-                    ostacoli.add(ostacolo);
-                } catch (NullPointerException e) {
-                    LOGGER.log(Level.WARNING, "Fallimento nella creazione dell'ostacolo: " + nome_src, e);
+
+                if (ostacoloOpt.isPresent()) {
+                    ostacoli.add(ostacoloOpt.get());
+                } else {
+                    LOGGER.log(Level.WARNING, "Fallimento nella creazione dell'ostacolo: " + nome_src);
                 }
             }
         } catch (SQLException e) {

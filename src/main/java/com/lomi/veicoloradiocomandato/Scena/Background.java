@@ -22,7 +22,7 @@ public class Background extends DayNightCycle {
             if (rectangle != null) {
                 initializeDayNightCycle();
             } else {
-                LOGGER.log(Level.SEVERE, "The background was not correctly initialized.");
+                throw new RuntimeException("The background was not correctly initialized.");
             }
         } catch (RuntimeException e) {
             LOGGER.log(Level.SEVERE, "Failed to load " + BACKGROUND_FXML_PATH, e);

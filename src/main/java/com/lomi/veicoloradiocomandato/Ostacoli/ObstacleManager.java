@@ -1,6 +1,6 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import com.lomi.veicoloradiocomandato.Gioco.GameManager;
+import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import com.lomi.veicoloradiocomandato.Scena.Road;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.TranslateTransition;
@@ -25,10 +25,10 @@ public class ObstacleManager {
     private final Road roadController;
     private final VeicoloManager vehicleManager;
     private final List<TranslateTransition> animations = new ArrayList<>();
-    private GameManager gameManager;
+    private final GameManagerInterface gameManager;
     private int obstacleCounter = 0;
 
-    public ObstacleManager(GridPane road, List<Obstacle> obstacles, Road roadController, VeicoloManager vehicleManager, GameManager gameManager) {
+    public ObstacleManager(GridPane road, List<Obstacle> obstacles, Road roadController, VeicoloManager vehicleManager, GameManagerInterface gameManager) {
         this.road = road;
         this.obstacles = obstacles;
         this.roadController = roadController;
@@ -40,6 +40,10 @@ public class ObstacleManager {
         if (obstacleCounter >= 5) return;
         try {
             Obstacle obstacle = getRandomObstacle(random);
+            if (obstacle == null) {
+                LOGGER.log(Level.WARNING, "Nessun ostacolo da generare");
+                return;
+            }
             ImageView obstacleView = obstacle.getObstacleImage();
             obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> {
                 ImageView vehicleNode = vehicleManager.getVehicleNode();
@@ -53,13 +57,11 @@ public class ObstacleManager {
                             alert.setHeaderText("Vuoi riprovare?");
 
                             Optional<ButtonType> result = alert.showAndWait();
-                            result.ifPresent(buttonType -> {
-                                if (buttonType == ButtonType.OK){
-                                    gameManager.restartGame();
-                                } else {
-                                    Platform.exit();
-                                }
-                            });
+                            if (result.isPresent() && result.get() == ButtonType.OK){
+                                gameManager.restartGame();
+                            } else {
+                                Platform.exit();
+                            }
                         });
                     }
                 }
@@ -74,15 +76,19 @@ public class ObstacleManager {
             LOGGER.log(Level.SEVERE, "Errore durante lo spawn dell'ostacolo.", e);
         }
     }
+
     private Obstacle getRandomObstacle(Random random) {
+        if(obstacles.isEmpty()) return null;
         int index = random.nextInt(obstacles.size());
         return obstacles.get(index);
     }
+
     private void placeObstacleInView(ImageView obstacleView, int lane) {
         obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
         road.getChildren().add(obstacleView);
         GridPane.setColumnIndex(obstacleView, lane);
     }
+
     private TranslateTransition moveObstacleAndViewHandleEnd(ImageView obstacleView, Random random) {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(5), obstacleView);
         transition.setByY(1400);
@@ -90,16 +96,12 @@ public class ObstacleManager {
         animations.add(transition);
         return transition;
     }
+
     private void endOfObstacleLifeCycle(ImageView obstacleView, Random random) {
         road.getChildren().remove(obstacleView);
         if (obstacleCounter > 0) obstacleCounter--;
         spawnObstacle(random);
     }
-
-    public void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
-    }
-
     public List<TranslateTransition> getAnimations() {
         return animations;
     }

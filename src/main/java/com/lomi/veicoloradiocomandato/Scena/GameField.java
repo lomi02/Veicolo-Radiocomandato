@@ -1,19 +1,19 @@
 package com.lomi.veicoloradiocomandato.Scena;
 
+import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameField {
     private final Scene scene;
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
 
-    public GameField(String chosenVehicle) {
+    public GameField(GameManagerInterface gameManager, String chosenVehicle, Road road) {
         try {
             Background background = new Background();
-            Road road = new Road(chosenVehicle);
             StackPane root = new StackPane();
             root.getChildren().addAll(background.getRectangle(), road.getRoad());
             scene = new Scene(root, 600, 800);

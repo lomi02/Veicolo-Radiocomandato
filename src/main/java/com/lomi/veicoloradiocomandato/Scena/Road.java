@@ -1,6 +1,6 @@
 package com.lomi.veicoloradiocomandato.Scena;
 
-import com.lomi.veicoloradiocomandato.Gioco.GameManager;
+import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
@@ -23,26 +23,22 @@ import java.util.logging.Logger;
 public class Road extends DayNightCycle {
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
-    private final ObstacleManager obstacleManager;
-    private final VeicoloManager vehicleManager;
+    private ObstacleManager obstacleManager;
+    private VeicoloManager vehicleManager;
     private GridPane road;
     private Rectangle lane1;
     private Rectangle lane2;
     private Rectangle lane3;
     private static final int[] lanes = {1, 3, 5};
 
-    public Road(String chosenVehicle) {
+    public Road(String chosenVehicle, GameManagerInterface gameManager) {
         try {
             initializeFXML();
             initializeDayNightCycle();
 
             ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
             this.vehicleManager = new VeicoloManager(road);
-            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this, vehicleManager, null);
-
-            GameManager gameManager = GameManager.getInstance(chosenVehicle, obstacleManager);
-            obstacleManager.setGameManager(gameManager);
-
+            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this, vehicleManager, gameManager);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -114,5 +110,9 @@ public class Road extends DayNightCycle {
 
     public GridPane getRoad() {
         return road;
+    }
+
+    public ObstacleManager getObstacleManager() {
+        return this.obstacleManager;
     }
 }
