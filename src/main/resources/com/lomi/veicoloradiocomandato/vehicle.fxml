@@ -3,7 +3,7 @@
 
 <ImageView
         fx:id="vehicle"
-        fitHeight="70"
-        fitWidth="40"
+        fitHeight="110"
+        fitWidth="60"
         xmlns:fx="http://javafx.com/fxml"
 />

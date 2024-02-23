@@ -9,7 +9,7 @@ public abstract class Veicolo extends VeicoloData {
     private final List<Observer> observers = new ArrayList<>();
 
     public Veicolo(String codice, String marca, double frequenza, String colore, String urlImmagine, String collisione) {
-        super(codice, marca, frequenza, colore, urlImmagine, collisione);
+        super(marca, urlImmagine, collisione);
     }
 
     public void addObserver(Observer observer) {

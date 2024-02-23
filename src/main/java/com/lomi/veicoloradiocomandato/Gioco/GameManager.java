@@ -12,15 +12,12 @@ public class GameManager {
     public GameManager(String chosenVehicle) {
         try {
             this.radiocomando = new Radiocomando();
-
-            // Try-catch block around creation of GameField
-            try {  // [AGGIUNTO]
+            try {
                 this.gameField = new GameField(chosenVehicle);
             } catch(Exception e){
                 LOGGER.log(Level.SEVERE, "Failed to create GameField.", e);
                 throw new RuntimeException("Failed to create GameField.", e);
-            }  // [AGGIUNTO]
-
+            }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to create GameManager.", e);
             throw new RuntimeException("Failed to create GameManager.", e);

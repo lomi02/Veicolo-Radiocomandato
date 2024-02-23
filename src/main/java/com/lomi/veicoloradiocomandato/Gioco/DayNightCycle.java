@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public abstract class DayNightCycle {
-
     protected Rectangle rectangle;
     private static final Logger LOGGER = Logger.getLogger(DayNightCycle.class.getName());
 

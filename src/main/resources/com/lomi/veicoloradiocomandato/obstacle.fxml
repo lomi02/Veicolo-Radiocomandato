@@ -3,7 +3,7 @@
 
 <ImageView
         fx:id="obstacle"
-        fitHeight="70"
-        fitWidth="70"
+        fitHeight="60"
+        fitWidth="60"
         xmlns:fx="http://javafx.com/fxml"
 />

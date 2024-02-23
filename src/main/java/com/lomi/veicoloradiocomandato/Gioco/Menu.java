@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public class Menu {
 
-    // Metodo per visualizzare il menu di selezione del veicolo
     public static Optional<String> showVehicleSelection() {
         List<String> choices = Arrays.asList("Ferrari", "Mercedes", "Porsche");
         ChoiceDialog<String> dialog = new ChoiceDialog<>("Ferrari", choices);

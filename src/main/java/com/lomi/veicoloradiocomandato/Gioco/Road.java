@@ -23,14 +23,8 @@ import java.util.logging.Logger;
 public class Road extends DayNightCycle {
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
-
-    // Added fields to store objects to be used in other methods.
-    // Using fields instead of local variables allow better error checking.
-    // [AGGIUNTO]
     private final ObstacleManager obstacleManager;
     private final VeicoloManager vehicleManager;
-    // [AGGIUNTO]
-
     private GridPane road;
     private Rectangle lane1;
     private Rectangle lane2;
@@ -45,7 +39,7 @@ public class Road extends DayNightCycle {
             ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
             this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this);
             VeicoloFetcher vehicleFetcher = new VeicoloFetcher();
-            this.vehicleManager = new VeicoloManager(road, vehicleFetcher.getVeicoli(), chosenVehicle, this);
+            this.vehicleManager = new VeicoloManager(road);
 
             new Timer().schedule(new TimerTask() {
                 @Override

@@ -42,25 +42,21 @@ public class ObstacleManager {
             LOGGER.log(Level.SEVERE, "Errore durante lo spawn dell'ostacolo.", e);
         }
     }
-
     private Obstacle getRandomObstacle(Random random) {
         int index = random.nextInt(obstacles.size());
         return obstacles.get(index);
     }
-
     private void placeObstacleInView(ImageView obstacleView, int lane) {
         obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
         road.getChildren().add(obstacleView);
         GridPane.setColumnIndex(obstacleView, lane);
     }
-
     private TranslateTransition moveObstacleAndViewHandleEnd(ImageView obstacleView, Random random) {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(5), obstacleView);
         transition.setByY(1400);
         transition.setOnFinished(e -> endOfObstacleLifeCycle(obstacleView, random));
         return transition;
     }
-
     private void endOfObstacleLifeCycle(ImageView obstacleView, Random random) {
         road.getChildren().remove(obstacleView);
         if (obstacleCounter > 0) obstacleCounter--;
