@@ -16,4 +16,5 @@ module com.lomi.veicoloradiocomandato {
 
     opens com.lomi.veicoloradiocomandato.Gioco to javafx.fxml, javafx.graphics;
     opens com.lomi.veicoloradiocomandato.Ostacoli to javafx.fxml, javafx.graphics;
+    opens com.lomi.veicoloradiocomandato.Scena to javafx.fxml, javafx.graphics;
 }

@@ -2,5 +2,5 @@
 
 <?import javafx.scene.shape.Rectangle?>
 
-<Rectangle fx:controller="com.lomi.veicoloradiocomandato.Gioco.BackgroundController" fx:id="background"
+<Rectangle fx:controller="com.lomi.veicoloradiocomandato.Scena.BackgroundController" fx:id="background"
            xmlns:fx="http://javafx.com/fxml" width="800" height="800" fill="#AAAAAA"/>

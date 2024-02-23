@@ -1,4 +1,4 @@
-package com.lomi.veicoloradiocomandato.Gioco;
+package com.lomi.veicoloradiocomandato.Scena;
 
 import javafx.scene.shape.Rectangle;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package com.lomi.veicoloradiocomandato.Gioco;
+package com.lomi.veicoloradiocomandato.Scena;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

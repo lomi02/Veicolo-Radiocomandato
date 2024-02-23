@@ -62,7 +62,4 @@ public class VeicoloFetcher {
         }
         return null;
     }
-    public List<Veicolo> getVeicoli() {
-        return veicoli;
-    }
 }

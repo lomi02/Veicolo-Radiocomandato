@@ -1,8 +1,8 @@
-package com.lomi.veicoloradiocomandato.Gioco;
+package com.lomi.veicoloradiocomandato.Scena;
 
+import com.lomi.veicoloradiocomandato.Gioco.GameManager;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
-import com.lomi.veicoloradiocomandato.Vehicle.VeicoloFetcher;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -37,9 +37,11 @@ public class Road extends DayNightCycle {
             initializeDayNightCycle();
 
             ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
-            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this);
-            VeicoloFetcher vehicleFetcher = new VeicoloFetcher();
             this.vehicleManager = new VeicoloManager(road);
+            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this, vehicleManager, null);
+
+            GameManager gameManager = GameManager.getInstance(chosenVehicle, obstacleManager);
+            obstacleManager.setGameManager(gameManager);
 
             new Timer().schedule(new TimerTask() {
                 @Override
