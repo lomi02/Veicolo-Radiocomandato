@@ -17,9 +17,11 @@ public class GameManager implements GameManagerInterface {
     private GameField gameField;
     private ObstacleManager obstacleManager;
     private Radiocomando radiocomando;
+    private boolean gameRunning = true;
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
-    public GameManager() {}
+    public GameManager() {
+    }
 
     public void setupGame(String chosenVehicle) {
         this.vehicle = chosenVehicle;
@@ -33,7 +35,7 @@ public class GameManager implements GameManagerInterface {
 
     private void startGame(Road road) {
         try {
-            this.gameField = new GameField(this, this.vehicle, road);
+            this.gameField = new GameField(road);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -59,6 +61,7 @@ public class GameManager implements GameManagerInterface {
     public void stopGame() {
         try {
             obstacleManager.getAnimations().forEach(TranslateTransition::stop);
+            gameRunning = false;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to stop game animations.", e);
         }
@@ -70,5 +73,9 @@ public class GameManager implements GameManagerInterface {
 
     public Radiocomando getRadiocomando() {
         return radiocomando;
+    }
+
+    public boolean isGameRunning() {
+        return gameRunning;
     }
 }

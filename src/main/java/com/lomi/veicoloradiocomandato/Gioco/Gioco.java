@@ -10,14 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Gioco extends Application {
-    private GameManagerInterface gameManager;
+    private final GameManagerInterface gameManager;
     private static final Logger LOGGER = Logger.getLogger(Gioco.class.getName());
 
     public Gioco() {
-    }
-
-    @Override
-    public void init() {
         this.gameManager = new GameManager();
     }
 
@@ -30,6 +26,8 @@ public class Gioco extends Application {
             if (selectVehicle.isPresent()) {
                 String chosenVehicle = selectVehicle.get();
                 new Road(chosenVehicle, gameManager);
+
+                gameManager.setupGame(chosenVehicle);
 
                 stage.setTitle("Veicolo Radiocomandato");
                 stage.setScene(gameManager.getGameField().getScene());

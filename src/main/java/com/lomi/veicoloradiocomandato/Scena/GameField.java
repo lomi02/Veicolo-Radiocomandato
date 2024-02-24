@@ -1,6 +1,5 @@
 package com.lomi.veicoloradiocomandato.Scena;
 
-import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 
@@ -11,7 +10,7 @@ public class GameField {
     private final Scene scene;
     private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
 
-    public GameField(GameManagerInterface gameManager, String chosenVehicle, Road road) {
+    public GameField(Road road) {
         try {
             Background background = new Background();
             StackPane root = new StackPane();

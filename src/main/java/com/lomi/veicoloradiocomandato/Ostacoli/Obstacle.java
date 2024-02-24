@@ -15,7 +15,7 @@ public abstract class Obstacle implements ObstacleInterface {
     private static final String OBSTACLE_FXML_PATH = "/com/lomi/veicoloradiocomandato/obstacle.fxml";
     protected String nome;
     protected String collisione;
-    protected Image immagine; // We need to store image, so we can use it later
+    protected Image immagine;
 
     public Obstacle(String nome, String immagine, String collisione) {
         this.nome = nome;
@@ -28,7 +28,7 @@ public abstract class Obstacle implements ObstacleInterface {
                 LOGGER.log(Level.SEVERE, "Risorsa non trovata: " + immagine);
                 throw new FileNotFoundException("Risorsa non trovata: " + immagine);
             }
-            this.immagine = new Image(inputStream); // Storing image for later use
+            this.immagine = new Image(inputStream);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Problema nel caricamento dell'immagine", e);
         }
@@ -50,7 +50,7 @@ public abstract class Obstacle implements ObstacleInterface {
         }
 
         if(this.immagine != null) {
-            imageView.setImage(this.immagine); // Set image if it is not null
+            imageView.setImage(this.immagine);
         }
 
         return imageView;

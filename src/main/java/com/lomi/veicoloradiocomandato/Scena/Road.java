@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 public class Road extends DayNightCycle {
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
-    private ObstacleManager obstacleManager;
-    private VeicoloManager vehicleManager;
+    private final ObstacleManager obstacleManager;
+    private final VeicoloManager vehicleManager;
     private GridPane road;
     private Rectangle lane1;
     private Rectangle lane2;

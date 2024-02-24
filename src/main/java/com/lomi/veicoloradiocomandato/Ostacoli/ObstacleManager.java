@@ -1,19 +1,18 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
+import com.lomi.veicoloradiocomandato.Gioco.CollisionHandler;
 import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import com.lomi.veicoloradiocomandato.Scena.Road;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +36,7 @@ public class ObstacleManager {
     }
 
     public void spawnObstacle(Random random) {
-        if (obstacleCounter >= 5) return;
+        if (obstacleCounter >= 5 || !gameManager.isGameRunning()) return;
         try {
             Obstacle obstacle = getRandomObstacle(random);
             if (obstacle == null) {
@@ -45,30 +44,16 @@ public class ObstacleManager {
                 return;
             }
             ImageView obstacleView = obstacle.getObstacleImage();
+            int lane = roadController.getRandomLane(random);
+            placeObstacleInView(obstacleView, lane);
+
             obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> {
                 ImageView vehicleNode = vehicleManager.getVehicleNode();
-                if (vehicleNode != null) {
-                    if (newBounds.intersects(vehicleNode.getBoundsInParent())) {
-                        Platform.runLater(() -> {
-                            gameManager.stopGame();
-
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                            alert.setTitle("Game Over");
-                            alert.setHeaderText("Vuoi riprovare?");
-
-                            Optional<ButtonType> result = alert.showAndWait();
-                            if (result.isPresent() && result.get() == ButtonType.OK){
-                                gameManager.restartGame();
-                            } else {
-                                Platform.exit();
-                            }
-                        });
-                    }
+                if (vehicleNode != null && newBounds.intersects(vehicleNode.getBoundsInParent()) && Objects.equals(GridPane.getColumnIndex(obstacleView), GridPane.getColumnIndex(vehicleNode))) {
+                    CollisionHandler.handleCollision(gameManager);
                 }
             });
 
-            int lane = roadController.getRandomLane(random);
-            placeObstacleInView(obstacleView, lane);
             TranslateTransition transition = moveObstacleAndViewHandleEnd(obstacleView, random);
             transition.play();
             obstacleCounter++;
@@ -77,16 +62,19 @@ public class ObstacleManager {
         }
     }
 
+
     private Obstacle getRandomObstacle(Random random) {
-        if(obstacles.isEmpty()) return null;
+        if (obstacles.isEmpty()) return null;
         int index = random.nextInt(obstacles.size());
         return obstacles.get(index);
     }
 
     private void placeObstacleInView(ImageView obstacleView, int lane) {
-        obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
-        road.getChildren().add(obstacleView);
-        GridPane.setColumnIndex(obstacleView, lane);
+        Platform.runLater(() -> {
+            obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
+            road.getChildren().add(obstacleView);
+            GridPane.setColumnIndex(obstacleView, lane);
+        });
     }
 
     private TranslateTransition moveObstacleAndViewHandleEnd(ImageView obstacleView, Random random) {
@@ -102,6 +90,7 @@ public class ObstacleManager {
         if (obstacleCounter > 0) obstacleCounter--;
         spawnObstacle(random);
     }
+
     public List<TranslateTransition> getAnimations() {
         return animations;
     }
