@@ -1,6 +1,5 @@
 package com.lomi.veicoloradiocomandato.Gioco;
 
-import com.lomi.veicoloradiocomandato.Scena.Road;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -24,12 +23,9 @@ public class Gioco extends Application {
             Optional<String> selectVehicle = vehicleSelector.selectVehicle();
 
             if (selectVehicle.isPresent()) {
-                String chosenVehicle = selectVehicle.get();
-                new Road(chosenVehicle, gameManager);
-
-                gameManager.setupGame(chosenVehicle);
-
                 stage.setTitle("Veicolo Radiocomandato");
+                gameManager.setupGame(stage, selectVehicle.get());
+
                 stage.setScene(gameManager.getGameField().getScene());
                 stage.show();
             } else {

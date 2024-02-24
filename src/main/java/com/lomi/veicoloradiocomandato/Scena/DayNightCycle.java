@@ -28,8 +28,4 @@ public abstract class DayNightCycle {
     }
 
     protected abstract void initializeDayNightCycle();
-
-    public Rectangle getRectangle() {
-        return rectangle;
-    }
 }

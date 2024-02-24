@@ -18,13 +18,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ObstacleManager {
-    private static final Logger LOGGER = Logger.getLogger(ObstacleManager.class.getName());
     private final GridPane road;
     private final List<Obstacle> obstacles;
     private final Road roadController;
     private final VeicoloManager vehicleManager;
     private final List<TranslateTransition> animations = new ArrayList<>();
     private final GameManagerInterface gameManager;
+    private static final Logger LOGGER = Logger.getLogger(ObstacleManager.class.getName());
     private int obstacleCounter = 0;
 
     public ObstacleManager(GridPane road, List<Obstacle> obstacles, Road roadController, VeicoloManager vehicleManager, GameManagerInterface gameManager) {
@@ -43,25 +43,25 @@ public class ObstacleManager {
                 LOGGER.log(Level.WARNING, "Nessun ostacolo da generare");
                 return;
             }
+
             ImageView obstacleView = obstacle.getObstacleImage();
             int lane = roadController.getRandomLane(random);
-            placeObstacleInView(obstacleView, lane);
+            placeObstacle(obstacleView, lane);
 
-            obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> {
+            obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> Platform.runLater(() -> {
                 ImageView vehicleNode = vehicleManager.getVehicleNode();
                 if (vehicleNode != null && newBounds.intersects(vehicleNode.getBoundsInParent()) && Objects.equals(GridPane.getColumnIndex(obstacleView), GridPane.getColumnIndex(vehicleNode))) {
                     CollisionHandler.handleCollision(gameManager);
                 }
-            });
+            }));
 
-            TranslateTransition transition = moveObstacleAndViewHandleEnd(obstacleView, random);
-            transition.play();
+            TranslateTransition transition = moveObstacle(obstacleView, random);
+            Platform.runLater(transition::play);
             obstacleCounter++;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Errore durante lo spawn dell'ostacolo.", e);
         }
     }
-
 
     private Obstacle getRandomObstacle(Random random) {
         if (obstacles.isEmpty()) return null;
@@ -69,23 +69,21 @@ public class ObstacleManager {
         return obstacles.get(index);
     }
 
-    private void placeObstacleInView(ImageView obstacleView, int lane) {
-        Platform.runLater(() -> {
-            obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
-            road.getChildren().add(obstacleView);
-            GridPane.setColumnIndex(obstacleView, lane);
-        });
+    private void placeObstacle(ImageView obstacleView, int lane) {
+        obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
+        road.getChildren().add(obstacleView);
+        GridPane.setColumnIndex(obstacleView, lane);
     }
 
-    private TranslateTransition moveObstacleAndViewHandleEnd(ImageView obstacleView, Random random) {
+    private TranslateTransition moveObstacle(ImageView obstacleView, Random random) {
         TranslateTransition transition = new TranslateTransition(Duration.seconds(5), obstacleView);
         transition.setByY(1400);
-        transition.setOnFinished(e -> endOfObstacleLifeCycle(obstacleView, random));
+        transition.setOnFinished(e -> killObstacle(obstacleView, random));
         animations.add(transition);
         return transition;
     }
 
-    private void endOfObstacleLifeCycle(ImageView obstacleView, Random random) {
+    private void killObstacle(ImageView obstacleView, Random random) {
         road.getChildren().remove(obstacleView);
         if (obstacleCounter > 0) obstacleCounter--;
         spawnObstacle(random);

@@ -7,7 +7,7 @@ public class BackgroundController {
     @FXML
     private Rectangle background;
 
-    public Rectangle getBackground() {
+    public Rectangle fetchBackground() {
         return background;
     }
 }

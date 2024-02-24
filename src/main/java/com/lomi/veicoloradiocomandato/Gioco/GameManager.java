@@ -5,26 +5,19 @@ import com.lomi.veicoloradiocomandato.Radiocomando.Radiocomando;
 import com.lomi.veicoloradiocomandato.Scena.GameField;
 import com.lomi.veicoloradiocomandato.Scena.Road;
 import javafx.animation.TranslateTransition;
+import javafx.stage.Stage;
 
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class GameManager implements GameManagerInterface {
-    private String vehicle;
     private GameField gameField;
     private ObstacleManager obstacleManager;
     private Radiocomando radiocomando;
     private boolean gameRunning = true;
     private static final Logger LOGGER = Logger.getLogger(GameManager.class.getName());
 
-    public GameManager() {
-    }
-
-    public void setupGame(String chosenVehicle) {
-        this.vehicle = chosenVehicle;
+    public void setupGame(Stage stage, String chosenVehicle) {
         this.radiocomando = new Radiocomando();
 
         Road road = new Road(chosenVehicle, this);
@@ -36,26 +29,13 @@ public class GameManager implements GameManagerInterface {
     private void startGame(Road road) {
         try {
             this.gameField = new GameField(road);
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    try {
-                        obstacleManager.spawnObstacle(new Random());
-                    } catch (Exception e) {
-                        LOGGER.log(Level.SEVERE, "Failed to spawn obstacle.", e);
-                    }
-                }
-            }, 0, 3000);
-
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Failed to initialize the game.", e);
-            throw new RuntimeException("Failed to initialize the game.", e);
+            LOGGER.log(Level.SEVERE, "Failed to initialize the game. Reason: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to initialize the game. Reason: " + e.getMessage(), e);
         }
     }
 
     public void restartGame() {
-        this.stopGame();
-        this.setupGame(vehicle);
     }
 
     public void stopGame() {

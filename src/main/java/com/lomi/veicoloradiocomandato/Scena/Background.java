@@ -5,6 +5,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.util.logging.Level;
@@ -18,7 +19,7 @@ public class Background extends DayNightCycle {
         try {
             FXMLLoader fxmlLoader = super.loadFXML(BACKGROUND_FXML_PATH);
             BackgroundController controller = fxmlLoader.getController();
-            rectangle = controller.getBackground();
+            rectangle = controller.fetchBackground();
             if (rectangle != null) {
                 initializeDayNightCycle();
             } else {
@@ -41,5 +42,9 @@ public class Background extends DayNightCycle {
 
         dayNightCycle.setCycleCount(Timeline.INDEFINITE);
         dayNightCycle.play();
+    }
+
+    public Rectangle getBackground() {
+        return rectangle;
     }
 }

@@ -14,7 +14,7 @@ public class GameField {
         try {
             Background background = new Background();
             StackPane root = new StackPane();
-            root.getChildren().addAll(background.getRectangle(), road.getRoad());
+            root.getChildren().addAll(background.getBackground(), road.getRoad());
             scene = new Scene(root, 600, 800);
         } catch (Exception e) {
             if (e instanceof NullPointerException)
@@ -24,7 +24,6 @@ public class GameField {
             throw new RuntimeException("Failed to create the game field.", e);
         }
     }
-
     public Scene getScene() {
         return scene;
     }
