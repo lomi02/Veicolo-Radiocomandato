@@ -2,10 +2,13 @@ package com.lomi.veicoloradiocomandato.Gioco;
 
 import com.lomi.veicoloradiocomandato.Radiocomando.Radiocomando;
 import com.lomi.veicoloradiocomandato.Scena.GameField;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public interface GameManagerInterface {
-    void setupGame(Stage stage, String chosenVehicle);
+    Scene getScene();
+
+    void startGame(Stage stage);
 
     void stopGame();
 
@@ -14,6 +17,7 @@ public interface GameManagerInterface {
     GameField getGameField();
 
     Radiocomando getRadiocomando();
+    CollisionManager getCollisionManager();
 
     boolean isGameRunning();
 }

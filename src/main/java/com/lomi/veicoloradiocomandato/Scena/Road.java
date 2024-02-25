@@ -1,8 +1,10 @@
 package com.lomi.veicoloradiocomandato.Scena;
 
 import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
+import com.lomi.veicoloradiocomandato.Ostacoli.Obstacle;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
+import com.lomi.veicoloradiocomandato.Vehicle.Veicolo;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -13,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +23,7 @@ import java.util.logging.Logger;
 public class Road extends DayNightCycle {
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
+    private final VeicoloManager vehicleManager;
     private final ObstacleManager obstacleManager;
     private GridPane road;
     private Rectangle lane1;
@@ -33,10 +37,12 @@ public class Road extends DayNightCycle {
             initializeDayNightCycle();
 
             ObstacleFetcher obstacleFetcher = new ObstacleFetcher();
-            VeicoloManager vehicleManager = new VeicoloManager(road);
-            this.obstacleManager = new ObstacleManager(road, obstacleFetcher.getObstacles(), this, vehicleManager, gameManager);
-            obstacleManager.spawnObstacle(new Random());
+            List<Obstacle> obstacles = obstacleFetcher.getObstacles();
+            this.vehicleManager = new VeicoloManager(road, obstacles, gameManager);
+            this.obstacleManager = new ObstacleManager(road, obstacles, this, vehicleManager, gameManager);
             vehicleManager.spawnVeicolo(chosenVehicle);
+            obstacleManager.startObstacleGeneration();
+
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to create Road.", e);
             throw new RuntimeException("Failed to create Road.", e);
@@ -102,7 +108,12 @@ public class Road extends DayNightCycle {
     public GridPane getRoad() {
         return road;
     }
-
+    public Veicolo getVeicolo() {
+        return vehicleManager.getVeicolo();
+    }
+    public VeicoloManager getVeicoloManager() {
+        return this.vehicleManager;
+    }
     public ObstacleManager getObstacleManager() {
         return this.obstacleManager;
     }

@@ -1,30 +1,46 @@
 package com.lomi.veicoloradiocomandato.Scena;
 
+import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
+import com.lomi.veicoloradiocomandato.Vehicle.Veicolo;
+import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-public class GameField {
+public class GameField implements GameFieldInterface {
     private final Scene scene;
-    private static final Logger LOGGER = Logger.getLogger(GameField.class.getName());
+    private final Road road;
 
     public GameField(Road road) {
-        try {
-            Background background = new Background();
-            StackPane root = new StackPane();
-            root.getChildren().addAll(background.getBackground(), road.getRoad());
-            scene = new Scene(root, 600, 800);
-        } catch (Exception e) {
-            if (e instanceof NullPointerException)
-                LOGGER.log(Level.SEVERE, "NullPointerException caught. This may be due to a null object returned when creating road/background", e);
-            else
-                LOGGER.log(Level.SEVERE, "An error occurred while creating the game field.", e);
-            throw new RuntimeException("Failed to create the game field.", e);
-        }
+        this.road = road;
+        Background background = new Background();
+        StackPane root = new StackPane();
+        root.getChildren().addAll(background.getBackground(), road.getRoad());
+        scene = new Scene(root, 600, 800);
     }
+
+    @Override
     public Scene getScene() {
         return scene;
+    }
+
+    @Override
+    public GridPane getRoad() {
+        return road.getRoad();
+    }
+
+    @Override
+    public Veicolo getVeicolo() {
+        return road.getVeicolo();
+    }
+
+    @Override
+    public VeicoloManager getVeicoloManager() {
+        return road.getVeicoloManager();
+    }
+
+    @Override
+    public ObstacleManager getObstacleManager() {
+        return road.getObstacleManager();
     }
 }

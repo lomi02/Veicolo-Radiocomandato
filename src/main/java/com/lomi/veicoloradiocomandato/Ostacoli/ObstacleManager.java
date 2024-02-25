@@ -1,6 +1,6 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import com.lomi.veicoloradiocomandato.Gioco.CollisionHandler;
+import com.lomi.veicoloradiocomandato.Gioco.CollisionManager;
 import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import com.lomi.veicoloradiocomandato.Scena.Road;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
@@ -12,8 +12,10 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ public class ObstacleManager {
     private final VeicoloManager vehicleManager;
     private final List<TranslateTransition> animations = new ArrayList<>();
     private final GameManagerInterface gameManager;
+    private final ScheduledExecutorService obstacleSpawner = Executors.newSingleThreadScheduledExecutor();
     private static final Logger LOGGER = Logger.getLogger(ObstacleManager.class.getName());
     private int obstacleCounter = 0;
 
@@ -36,7 +39,11 @@ public class ObstacleManager {
     }
 
     public void spawnObstacle(Random random) {
-        if (obstacleCounter >= 5 || !gameManager.isGameRunning()) return;
+        LOGGER.log(Level.INFO, "Tentativo di generare un ostacolo...");
+        if (obstacleCounter >= 5 || !gameManager.isGameRunning()) {
+            LOGGER.log(Level.INFO, "Non è possibile generare un ostacolo. Contatore ostacoli: " + obstacleCounter + ", Gioco in esecuzione: " + gameManager.isGameRunning());
+            return;
+        }
         try {
             Obstacle obstacle = getRandomObstacle(random);
             if (obstacle == null) {
@@ -46,18 +53,23 @@ public class ObstacleManager {
 
             ImageView obstacleView = obstacle.getObstacleImage();
             int lane = roadController.getRandomLane(random);
-            placeObstacle(obstacleView, lane);
 
-            obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> Platform.runLater(() -> {
-                ImageView vehicleNode = vehicleManager.getVehicleNode();
-                if (vehicleNode != null && newBounds.intersects(vehicleNode.getBoundsInParent()) && Objects.equals(GridPane.getColumnIndex(obstacleView), GridPane.getColumnIndex(vehicleNode))) {
-                    CollisionHandler.handleCollision(gameManager);
-                }
-            }));
+            Platform.runLater(() -> {
+                placeObstacle(obstacleView, lane);
 
-            TranslateTransition transition = moveObstacle(obstacleView, random);
-            Platform.runLater(transition::play);
-            obstacleCounter++;
+                CollisionManager collisionManager = gameManager.getCollisionManager();
+                obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> Platform.runLater(() -> {
+                    ImageView vehicleNode = vehicleManager.getVehicleNode();
+                    if (vehicleNode != null) {
+                        collisionManager.handleCollision(gameManager, newBounds, vehicleNode, obstacleView);
+                    }
+                }));
+
+                TranslateTransition transition = moveObstacle(obstacleView, random);
+                transition.play();
+                obstacleCounter++;
+                LOGGER.log(Level.INFO, "Ostacolo generato con successo. Contatore ostacoli: " + obstacleCounter);
+            });
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Errore durante lo spawn dell'ostacolo.", e);
         }
@@ -76,7 +88,7 @@ public class ObstacleManager {
     }
 
     private TranslateTransition moveObstacle(ImageView obstacleView, Random random) {
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(5), obstacleView);
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(8), obstacleView);
         transition.setByY(1400);
         transition.setOnFinished(e -> killObstacle(obstacleView, random));
         animations.add(transition);
@@ -86,7 +98,16 @@ public class ObstacleManager {
     private void killObstacle(ImageView obstacleView, Random random) {
         road.getChildren().remove(obstacleView);
         if (obstacleCounter > 0) obstacleCounter--;
+        LOGGER.log(Level.INFO, "Ostacolo rimosso. Contatore ostacoli: " + obstacleCounter);
         spawnObstacle(random);
+    }
+
+    public void startObstacleGeneration() {
+        obstacleSpawner.scheduleAtFixedRate(() -> spawnObstacle(new Random()), 0, 5, TimeUnit.SECONDS);
+    }
+
+    public void stopObstacleGeneration() {
+        obstacleSpawner.shutdown();
     }
 
     public List<TranslateTransition> getAnimations() {
