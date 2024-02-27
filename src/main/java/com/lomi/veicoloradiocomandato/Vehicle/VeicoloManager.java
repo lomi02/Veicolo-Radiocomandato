@@ -21,10 +21,14 @@ public class VeicoloManager {
     private Veicolo veicolo;
     private ImageView veicoloView;
     private final List<Obstacle> obstacles;
-    private List<TranslateTransition> animations = new ArrayList<>();
+    private final List<TranslateTransition> animations = new ArrayList<>();
+
+    public boolean isAnimating() {
+        return animations.stream().anyMatch(a -> a.getStatus() == Animation.Status.RUNNING);
+    }
+
     private final GameManagerInterface gameManager;
 
-    // Costruttore e metodi pubblici
     public VeicoloManager(GridPane road, List<Obstacle> obstacles, GameManagerInterface gameManager) {
         this.road = road;
         this.obstacles = obstacles;
@@ -75,7 +79,6 @@ public class VeicoloManager {
         transition.play();
     }
 
-    // Metodi privati
     private void placeVehicleInView(ImageView veicoloView) {
         road.getChildren().add(veicoloView);
         GridPane.setColumnIndex(veicoloView, 3);
@@ -94,7 +97,9 @@ public class VeicoloManager {
     }
 
     private TranslateTransition createTransition(int targetLane) {
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), veicoloView);
+        double speedFactor = gameManager.getRadiocomando().getMarciaAttuale();
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5 / speedFactor), veicoloView);
+
         transition.setToX((targetLane - GridPane.getColumnIndex(veicoloView)) * 30);
 
         transition.setOnFinished(e -> {

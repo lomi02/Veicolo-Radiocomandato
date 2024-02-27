@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane>
+        <padding>
+            <Insets topRightBottomLeft="15.0"/>
+        </padding>
+
+        <left>
+            <VBox>
+                <Label id="timerLabel" fx:id="timerLabel" text="Tempo: 0s" styleClass="game-label"/>
+                <Label id="scoreLabel" fx:id="scoreLabel" text="Punteggio: 0" styleClass="game-label"/>
+            </VBox>
+        </left>
+
+        <right>
+            <Label id="gearLabel" fx:id="gearLabel" text="Marcia: 3" styleClass="game-label"/>
+        </right>
+    </BorderPane>
+</VBox>

@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<GridPane fx:controller="com.lomi.veicoloradiocomandato.Scena.RoadController" fx:id="road"
+<GridPane fx:id="road"
           xmlns:fx="http://javafx.com/fxml" alignment="CENTER">
     <!-- Corsia 1 -->
     <Rectangle fx:id="lane1" width="60" height="800" fill="#AAAAAA" GridPane.columnIndex="1"/>

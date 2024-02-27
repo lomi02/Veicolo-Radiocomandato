@@ -1,72 +1,66 @@
 package com.lomi.veicoloradiocomandato.Radiocomando;
 
-import com.lomi.veicoloradiocomandato.Scena.GameFieldInterface;
+import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
+import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
-import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Duration;
 
-public class Radiocomando {
-    private Command manubrioCommand;
-    private Command acceleratoreCommand;
-    private Command frenoCommand;
-
+public class Radiocomando implements RadiocomandoInterface {
+    private int marciaAttuale = 3;
     private boolean isAnimating = false;
 
-    public Radiocomando(GameFieldInterface gameFieldInterface, VeicoloManager veicoloManager, Marcia marcia) {
-        marcia = new Marcia();
+    public Radiocomando(GameManagerInterface gameManagerInterface, VeicoloManager veicoloManager) {
+        marciaAttuale = getMarciaAttuale();
         EventHandler<KeyEvent> keyEventHandler = event -> {
-            if (!isAnimating) {
+            if (!veicoloManager.isAnimating()) {
+                ObstacleManager obstacleManager = gameManagerInterface.getObstacleManager();
+                isAnimating = true;
                 switch (event.getCode()) {
                     case W:
-                        //setAcceleratoreCommand(new AcceleratoreCommand(veicolo, marcia));
+                        obstacleManager.stopObstacleGeneration();
+                        incrementaMarcia();
+                        obstacleManager.startObstacleGeneration();
                         break;
                     case S:
-                        //setFrenoCommand(new FrenoCommand(veicolo, marcia));
+                        obstacleManager.stopObstacleGeneration();
+                        decrementaMarcia();
+                        obstacleManager.startObstacleGeneration();
                         break;
                     case A:
-                        setManubrioCommand(new ManubrioCommand(veicoloManager, "sinistra"));
-                        manubrio();
+                        veicoloManager.spostaVeicolo("sinistra");
                         break;
                     case D:
-                        setManubrioCommand(new ManubrioCommand(veicoloManager, "destra"));
-                        manubrio();
+                        veicoloManager.spostaVeicolo("destra");
                         break;
                 }
+                isAnimating = false;
             }
         };
-        gameFieldInterface.getScene().setOnKeyPressed(keyEventHandler);
+        gameManagerInterface.getGameField().getScene().setOnKeyPressed(keyEventHandler);
     }
 
-    public void setManubrioCommand(Command manubrioCommand) {
-        this.manubrioCommand = manubrioCommand;
+    @Override
+    public int getMarciaAttuale() {
+        return marciaAttuale;
     }
 
-    public void setAcceleratoreCommand(Command acceleratoreCommand) {
-        this.acceleratoreCommand = acceleratoreCommand;
+    @Override
+    public void resetMarcia() {
+        marciaAttuale = 3;
     }
 
-    public void setFrenoCommand(Command frenoCommand) {
-        this.frenoCommand = frenoCommand;
-    }
-
-    public void manubrio() {
-        if (!isAnimating) {
-            isAnimating = true;
-            manubrioCommand.execute();
-            PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
-            pause.setOnFinished(e -> isAnimating = false);
-            pause.play();
+    @Override
+    public void incrementaMarcia() {
+        if (marciaAttuale < 5) {
+            marciaAttuale++;
         }
     }
 
-
-    public void acceleratore() {
-        acceleratoreCommand.execute();
-    }
-
-    public void freno() {
-        frenoCommand.execute();
+    @Override
+    public void decrementaMarcia() {
+        if (marciaAttuale > 1) {
+            marciaAttuale--;
+        }
     }
 }

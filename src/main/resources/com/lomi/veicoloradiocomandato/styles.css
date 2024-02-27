@@ -1,0 +1,15 @@
+.game-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFC107;
+    -fx-effect: dropshadow(gaussian, rgba(49, 43, 43, 0.9), 10, 0.1, 0, 0);
+}
+
+#gearLabel, #timerLabel, #scoreLabel {
+    -fx-text-fill: #FFC107;
+    -fx-effect: dropshadow(gaussian, rgba(49, 43, 43, 0.9), 10, 0.1, 0, 0);
+}
+
+#vbox {
+    -fx-spacing: 15.0;
+}
