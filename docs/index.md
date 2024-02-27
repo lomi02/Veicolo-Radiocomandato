@@ -8,7 +8,7 @@ author: Lorenzo Mirabella
 Veicolo Radiocomandato è un progetto universitario di Programmazione 3 che consiste in un gioco di macchinine
 radiocomandate sviluppato su JavaFX con Gradle.
 
-### Traccia
+## Traccia
 
     Si vuole sviluppare un’applicazione per la gestione di un veicolo radiocomandato (auto, moto, camion, ...).
     Ogni veicolo è identificato da un codice, tipo veicolo, marca e frequenza di funzionamento.
@@ -35,7 +35,7 @@ radiocomandate sviluppato su JavaFX con Gradle.
 
     Sviluppare l’applicazione per la gestione di veicoli radiocomandati prevedendo le opportune interfacce.
 
-### Note di sviluppo:
+## Note di sviluppo:
 
     La prova d’esame richiede la progettazione e lo sviluppo della traccia proposta.
     Lo studente può scegliere di sviluppare il progetto nelle due modalità: Applicazione Web o programma standalone con supporto grafico.
@@ -79,6 +79,6 @@ Il gioco è dotato di:
 - Un implementazione di collisioni, Game Over e Restart sufficientemente avanzato per consentire una continuità di gioco
   fluida e interattiva.
 
-![Gioco Giorno](/docs/images/gioco1.png)
+![Gioco Giorno](images/gioco1.png)
 
-![Gioco Notte](/docs/images/gioco2.png)
+![Gioco Notte](images/gioco2.png)
