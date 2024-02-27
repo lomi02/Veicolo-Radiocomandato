@@ -1,7 +1,7 @@
 package com.lomi.veicoloradiocomandato.Vehicle;
 
 /**
- * La classe VeicoloFactory è responsabile per la creazione di istanze di veicoli.
+ * La classe VeicoloFactory e' responsabile per la creazione di istanze di veicoli.
  */
 public class VeicoloFactory {
 

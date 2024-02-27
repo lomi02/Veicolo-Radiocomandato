@@ -1,0 +1,6 @@
+module:com.lomi.veicoloradiocomandato
+com.lomi.veicoloradiocomandato.Gioco
+com.lomi.veicoloradiocomandato.Ostacoli
+com.lomi.veicoloradiocomandato.Radiocomando
+com.lomi.veicoloradiocomandato.Scena
+com.lomi.veicoloradiocomandato.Vehicle

@@ -86,18 +86,34 @@ public class ObstacleManager {
         }
     }
 
+    /**
+     * Fa apparire un ostacolo casualmente dalle immagini preimpostate.
+     *
+     * @param random Il generatore casuale utilizzato per la scelta dell'ostacolo.
+     */
     private Obstacle getRandomObstacle(Random random) {
         if (obstacles.isEmpty()) return null;
         int index = random.nextInt(obstacles.size());
         return obstacles.get(index);
     }
 
+    /**
+     * Posiziona l'ostacolo a schermo.
+     *
+     * @param obstacleView Il view di un ostacolo.
+     * @param lane         Il numero di colonne che rappre
+     */
     private void placeObstacle(ImageView obstacleView, int lane) {
         obstacleView.setTranslateY(-obstacleView.getImage().getHeight() - 200);
         road.getChildren().add(obstacleView);
         GridPane.setColumnIndex(obstacleView, lane);
     }
 
+    /**
+     * Gestisce la transizione di movimento dell'ostacolo.
+     *
+     * @param obstacleView Il view di un ostacolo.
+     */
     private TranslateTransition moveObstacle(ImageView obstacleView) {
         double speedFactor = gameManager.getRadiocomando().getMarciaAttuale();
         TranslateTransition transition = new TranslateTransition(Duration.seconds(7.5 / speedFactor), obstacleView);
@@ -107,6 +123,11 @@ public class ObstacleManager {
         return transition;
     }
 
+    /**
+     * Rimuove l'ostacolo dalla strada.
+     *
+     * @param obstacleView Il view di un ostacolo.
+     */
     private void killObstacle(ImageView obstacleView) {
         road.getChildren().remove(obstacleView);
     }

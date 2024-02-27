@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * La classe ObstacleFactory è responsabile della creazione degli oggetti Ostacolo.
+ * La classe ObstacleFactory e' responsabile della creazione degli oggetti Ostacolo.
  */
 public class ObstacleFactory {
 

@@ -20,25 +20,31 @@ public class CollisionManager {
     /**
      * Gestisce la collisione tra il veicolo e un ostacolo.
      *
-     * @param gameManager   Il gestore del gioco.
-     * @param newBounds     I nuovi limiti del veicolo dopo il movimento.
-     * @param vehicleNode   L'immagine del veicolo.
-     * @param obstacleView  L'immagine dell'ostacolo.
+     * @param gameManager  Il gestore del gioco.
+     * @param newBounds    I nuovi limiti del veicolo dopo il movimento.
+     * @param vehicleNode  L'immagine del veicolo.
+     * @param obstacleView L'immagine dell'ostacolo.
      */
     public void handleCollision(GameManagerInterface gameManager, Bounds newBounds, ImageView vehicleNode, ImageView obstacleView) {
+        // Verifica se la collisione non è già stata gestita e se i limiti del veicolo si sovrappongono a quelli dell'ostacolo sulla stessa colonna.
         if (!collisionHandled && newBounds.intersects(vehicleNode.getBoundsInParent()) && Objects.equals(GridPane.getColumnIndex(obstacleView), GridPane.getColumnIndex(vehicleNode))) {
+            // Ferma il gioco.
             gameManager.stopGame();
 
+            // Visualizza un messaggio di "Game Over" con opzioni per riprovare o uscire.
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Game Over");
             alert.setHeaderText("Vuoi riprovare?");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Riprova il gioco.
                 gameManager.restartGame();
             } else {
+                // Esci dal gioco.
                 Platform.exit();
             }
+            // Imposta la collisione come gestita per evitare azioni duplicate.
             collisionHandled = true;
         }
     }

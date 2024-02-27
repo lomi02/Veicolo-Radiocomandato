@@ -3,7 +3,7 @@ package com.lomi.veicoloradiocomandato.Scena;
 import javafx.scene.shape.Rectangle;
 
 /**
- * La classe astratta DayNightCycle definisce un ciclo giorno-notte mediante l'uso di un rettangolo.
+ * La classe astratta DayNightCycle definisce un ciclo giorno-notte.
  */
 public abstract class DayNightCycle {
 

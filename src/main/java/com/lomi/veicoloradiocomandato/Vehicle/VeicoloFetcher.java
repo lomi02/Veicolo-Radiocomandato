@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * La classe VeicoloFetcher è responsabile per il recupero dei veicoli da un database SQLite.
+ * La classe VeicoloFetcher e' responsabile per il recupero dei veicoli da un database SQLite.
  */
 public class VeicoloFetcher {
 

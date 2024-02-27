@@ -74,7 +74,7 @@ public interface GameManagerInterface {
     ObstacleManager getObstacleManager();
 
     /**
-     * Verifica se il gioco è in esecuzione.
+     * Verifica se il gioco e' in esecuzione.
      *
      * @return true se il gioco è in esecuzione, false altrimenti.
      */
@@ -83,7 +83,7 @@ public interface GameManagerInterface {
     /**
      * Carica un file FXML associato a un controller specifico.
      *
-     * @param fxml      Il percorso del file FXML.
+     * @param fxml       Il percorso del file FXML.
      * @param controller Il controller associato al file FXML.
      * @throws IOException Se si verifica un errore durante il caricamento del file FXML.
      */
