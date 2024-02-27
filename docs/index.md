@@ -82,3 +82,108 @@ Il gioco è dotato di:
 ![Gioco Giorno](images/gioco1.png)
 
 ![Gioco Notte](images/gioco2.png)
+
+# Logica di codice
+
+Il codice è architettato per avere una struttura gerarchica di questo tipo:
+
+- Gioco
+    - GameManager
+        - CollisionManager
+        - GameUI
+        - VeicoloManager
+        - ObstacleManager
+        - Radiocomando
+        - GameField
+            - Background
+            - Road
+
+Il codice è diviso in package per suddividere il ruolo di ciascuna parte del codice.
+
+## Gioco
+
+![Gioco UML](images/Gioco.png)
+
+Il package di Gioco contiene:
+
+- Gioco
+- GameManager
+- GameManagerInterface
+- GameUI
+- CollisionManager
+- VehicleSelector
+
+## Radiocomando
+
+![Radiocomando UML](images/Radiocomando.png)
+
+Il package di Radiocomando contiene:
+
+- Radiocomando
+- RadiocomandoInterface
+- Command
+    - IncrementaMarciaCommand
+    - DecrementaMarciaCommand
+    - SpostaVeicoloSinistraCommand
+    - SpostaVeicoloDestraCommand
+
+## Vehicle
+
+![Vehicle UML](images/Vehicle.png)
+
+Il package di Scena contiene:
+
+- Veicolo
+- VeicoloManager
+- VeicoloFetcher
+- VeicoloFactory
+    - Auto
+
+## Ostacoli
+
+![Ostacoli UML](images/Ostacoli.png)
+
+Il package di Ostacoli contiene:
+
+- Obstacle
+- ObstacleManager
+- ObstacleFetcher
+- ObstacleFactory
+    - Cone
+    - Hole
+    - Oil
+    - Tree
+    - Roadblock
+
+## Scena
+
+![Scena UML](images/Scena.png)
+
+Il package di Scena contiene:
+
+- GameField
+- GameFieldInterface
+- DayNightCycle
+- Road
+    - RoadController
+- Background
+    - BackgroundController
+
+# Patterns
+
+I pattern utilizzati sono due:
+
+- Factory Pattern
+    - Il Factory Pattern è stato implementato due volte.
+        - La prima volta debolmente all'interno del package Veicolo per
+          garantire in modo estendibile la creazione di veicoli diversi con caratteristiche diverse.
+        - La seconda volta è stato implementato in modo completo nella creazione di diversi ostacoli, ognuno con una
+          ImageView diversa.
+- Command Pattern
+    - Il Command Pattern è stato utilizzato per separare le operazioni effettuate dal radiocomando in istanze differenti
+      specializzate.
+
+# Crediti
+
+Progetto sviluppato da Lorenzo Mirabella [0124002515] per l'esame di Reti di Calcolatori dell'anno accademico 2023/2024
+dell'università Parthenope (NA) sostenuto con il professor Emanuel Di Nardo.
