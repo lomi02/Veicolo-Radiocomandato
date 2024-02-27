@@ -10,16 +10,24 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class Obstacle implements ObstacleInterface {
+/**
+ * La classe astratta Obstacle rappresenta un generico ostacolo nel gioco.
+ */
+public abstract class Obstacle {
+
     private static final Logger LOGGER = Logger.getLogger(Obstacle.class.getName());
     private static final String OBSTACLE_FXML_PATH = "/com/lomi/veicoloradiocomandato/obstacle.fxml";
     protected String nome;
-    protected String collisione;
     protected Image immagine;
 
-    public Obstacle(String nome, String immagine, String collisione) {
+    /**
+     * Costruttore della classe Obstacle.
+     *
+     * @param nome     Il nome dell'ostacolo.
+     * @param immagine Il percorso dell'immagine associata all'ostacolo.
+     */
+    public Obstacle(String nome, String immagine) {
         this.nome = nome;
-        this.collisione = collisione;
 
         try {
             InputStream inputStream = getClass().getResourceAsStream("/com/lomi/veicoloradiocomandato/img/" + immagine);
@@ -34,10 +42,11 @@ public abstract class Obstacle implements ObstacleInterface {
         }
     }
 
-    public String getNome() {
-        return nome;
-    }
-
+    /**
+     * Restituisce un'ImageView associata all'immagine dell'ostacolo.
+     *
+     * @return Un'ImageView con l'immagine dell'ostacolo.
+     */
     public ImageView getObstacleImage() {
         ImageView imageView;
 
@@ -49,14 +58,10 @@ public abstract class Obstacle implements ObstacleInterface {
             imageView = new ImageView();
         }
 
-        if(this.immagine != null) {
+        if (this.immagine != null) {
             imageView.setImage(this.immagine);
         }
 
         return imageView;
-    }
-
-    public String getCollisione() {
-        return collisione;
     }
 }

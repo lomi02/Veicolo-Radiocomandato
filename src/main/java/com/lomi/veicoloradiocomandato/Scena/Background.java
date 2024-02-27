@@ -12,30 +12,42 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * La classe Background estende la classe DayNightCycle e rappresenta lo sfondo del gioco.
+ */
 public class Background extends DayNightCycle {
+
     private static final Logger LOGGER = Logger.getLogger(Background.class.getName());
     private static final String BACKGROUND_FXML_PATH = "/com/lomi/veicoloradiocomandato/background.fxml";
 
+    /**
+     * Costruttore della classe Background.
+     *
+     * @param gameManager L'interfaccia del gestore di gioco.
+     */
     public Background(GameManagerInterface gameManager) {
         try {
             BackgroundController controller = new BackgroundController();
             try {
                 gameManager.loadFXML(BACKGROUND_FXML_PATH, controller);
-            } catch(IOException e) {
-                LOGGER.log(Level.SEVERE, "Failed to load " + BACKGROUND_FXML_PATH, e);
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Impossibile caricare " + BACKGROUND_FXML_PATH, e);
                 throw new RuntimeException(e);
             }
             rectangle = controller.fetchBackground();
             if (rectangle != null) {
                 initializeDayNightCycle();
             } else {
-                throw new RuntimeException("The background was not correctly initialized.");
+                throw new RuntimeException("Lo sfondo non è stato inizializzato correttamente.");
             }
         } catch (RuntimeException e) {
-            LOGGER.log(Level.SEVERE, "Failed to load " + BACKGROUND_FXML_PATH, e);
+            LOGGER.log(Level.SEVERE, "Impossibile caricare " + BACKGROUND_FXML_PATH, e);
         }
     }
 
+    /**
+     * Inizializza il ciclo giorno-notte con le animazioni dei colori dello sfondo.
+     */
     @Override
     protected void initializeDayNightCycle() {
         Timeline dayNightCycle = new Timeline(
@@ -50,6 +62,11 @@ public class Background extends DayNightCycle {
         dayNightCycle.play();
     }
 
+    /**
+     * Restituisce l'istanza di Rectangle associata allo sfondo.
+     *
+     * @return L'istanza di Rectangle rappresentante lo sfondo.
+     */
     public Rectangle getBackground() {
         return rectangle;
     }

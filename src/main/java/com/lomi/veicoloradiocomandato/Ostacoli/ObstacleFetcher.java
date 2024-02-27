@@ -1,25 +1,32 @@
 package com.lomi.veicoloradiocomandato.Ostacoli;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * La classe ObstacleFetcher si occupa di recuperare gli ostacoli dal database SQLite.
+ */
 public class ObstacleFetcher {
+
     private static final Logger LOGGER = Logger.getLogger(ObstacleFetcher.class.getName());
     private static final String DB_FILE_PATH = "identifier.sqlite";
     private final List<Obstacle> ostacoli = new ArrayList<>();
 
+    /**
+     * Costruttore della classe ObstacleFetcher.
+     * Carica gli ostacoli dal database durante l'inizializzazione.
+     */
     public ObstacleFetcher() {
         loadObstaclesFromDatabase();
     }
 
+    /**
+     * Carica gli ostacoli dal database SQLite.
+     */
     private void loadObstaclesFromDatabase() {
         Connection connection = null;
         try {
@@ -35,8 +42,7 @@ public class ObstacleFetcher {
                 Optional<Obstacle> ostacoloOpt = ObstacleFactory.creaOstacolo(
                         nome_src,
                         resultSet.getString("NOME"),
-                        resultSet.getString("URL_IMMAGINE"),
-                        resultSet.getString("COLLISIONE"));
+                        resultSet.getString("URL_IMMAGINE"));
 
                 if (ostacoloOpt.isPresent()) {
                     ostacoli.add(ostacoloOpt.get());
@@ -57,6 +63,11 @@ public class ObstacleFetcher {
         }
     }
 
+    /**
+     * Restituisce la lista degli ostacoli recuperati dal database.
+     *
+     * @return La lista degli ostacoli.
+     */
     public List<Obstacle> getObstacles() {
         return ostacoli;
     }

@@ -6,15 +6,25 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * La classe VeicoloFetcher è responsabile per il recupero dei veicoli da un database SQLite.
+ */
 public class VeicoloFetcher {
+
     private static final Logger LOGGER = Logger.getLogger(VeicoloFetcher.class.getName());
     private static final String DB_FILE_PATH = "identifier.sqlite";
     private final List<Veicolo> veicoli = new ArrayList<>();
 
+    /**
+     * Costruttore della classe VeicoloFetcher. Carica i veicoli dal database durante l'inizializzazione.
+     */
     public VeicoloFetcher() {
         loadVeicoliFromDatabase();
     }
 
+    /**
+     * Metodo privato per caricare i veicoli dal database SQLite.
+     */
     private void loadVeicoliFromDatabase() {
         Connection connection = null;
         try {
@@ -28,12 +38,8 @@ public class VeicoloFetcher {
 
                 String codice = resultSet.getString("CODICE");
                 Veicolo veicolo = VeicoloFactory.creaVeicolo(
-                        codice,
                         resultSet.getString("MARCA"),
-                        resultSet.getDouble("FREQUENZA"),
-                        resultSet.getString("COLORE"),
-                        resultSet.getString("URL_IMMAGINE"),
-                        resultSet.getString("COLLISIONE"));
+                        resultSet.getString("URL_IMMAGINE"));
                 try {
                     veicoli.add(veicolo);
                 } catch (NullPointerException e) {
@@ -54,6 +60,12 @@ public class VeicoloFetcher {
         }
     }
 
+    /**
+     * Restituisce un veicolo in base alla marca fornita.
+     *
+     * @param marca La marca del veicolo da cercare.
+     * @return Il veicolo corrispondente alla marca, o null se non trovato.
+     */
     public Veicolo getVeicoloPerMarca(String marca) {
         for (Veicolo veicolo : veicoli) {
             if (veicolo.getMarca().equals(marca)) {

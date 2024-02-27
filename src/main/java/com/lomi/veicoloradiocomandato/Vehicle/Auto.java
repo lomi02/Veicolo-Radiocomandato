@@ -1,7 +1,17 @@
 package com.lomi.veicoloradiocomandato.Vehicle;
 
+/**
+ * La classe Auto estende la classe astratta Veicolo e rappresenta un veicolo di tipo auto.
+ */
 public class Auto extends Veicolo {
-    public Auto(String codice, String marca, double frequenza, String colore, String url, String collisione) {
-        super(codice, marca, frequenza, colore, url, collisione);
+
+    /**
+     * Costruttore della classe Auto.
+     *
+     * @param marca La marca dell'auto.
+     * @param url   L'URL dell'immagine associata all'auto.
+     */
+    public Auto(String marca, String url) {
+        super(marca, url);
     }
 }

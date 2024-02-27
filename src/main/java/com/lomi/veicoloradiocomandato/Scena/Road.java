@@ -4,7 +4,6 @@ import com.lomi.veicoloradiocomandato.Gioco.GameManagerInterface;
 import com.lomi.veicoloradiocomandato.Ostacoli.Obstacle;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleFetcher;
 import com.lomi.veicoloradiocomandato.Ostacoli.ObstacleManager;
-import com.lomi.veicoloradiocomandato.Vehicle.Veicolo;
 import com.lomi.veicoloradiocomandato.Vehicle.VeicoloManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -20,7 +19,11 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * La classe Road estende la classe DayNightCycle e rappresenta la strada del gioco.
+ */
 public class Road extends DayNightCycle {
+
     private static final Logger LOGGER = Logger.getLogger(Road.class.getName());
     private static final String ROAD_FXML_PATH = "/com/lomi/veicoloradiocomandato/road.fxml";
     private final VeicoloManager vehicleManager;
@@ -31,13 +34,19 @@ public class Road extends DayNightCycle {
     private final Rectangle lane3;
     private static final int[] lanes = {1, 3, 5};
 
+    /**
+     * Costruttore della classe Road.
+     *
+     * @param chosenVehicle Il veicolo scelto dal giocatore.
+     * @param gameManager   L'interfaccia del gestore di gioco.
+     */
     public Road(String chosenVehicle, GameManagerInterface gameManager) {
         try {
             RoadController controller = new RoadController();
             try {
                 gameManager.loadFXML(ROAD_FXML_PATH, controller);
-            } catch(IOException e) {
-                LOGGER.log(Level.SEVERE, "Failed to load " + ROAD_FXML_PATH, e);
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Impossibile caricare " + ROAD_FXML_PATH, e);
                 throw new RuntimeException(e);
             }
             road = controller.getRoad();
@@ -56,11 +65,19 @@ public class Road extends DayNightCycle {
             obstacleManager.spawnObstacle(new Random());
 
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Failed to create Road.", e);
-            throw new RuntimeException("Failed to create Road.", e);
+            LOGGER.log(Level.SEVERE, "Impossibile creare Road.", e);
+            throw new RuntimeException("Impossibile creare Road.", e);
         }
     }
 
+    /**
+     * Verifica che le corsie e la strada siano correttamente inizializzate.
+     *
+     * @param lane1 La prima corsia.
+     * @param lane2 La seconda corsia.
+     * @param lane3 La terza corsia.
+     * @param road  La strada.
+     */
     private void checkInitialization(Rectangle lane1, Rectangle lane2, Rectangle lane3, GridPane road) {
         if (lane1 == null || lane2 == null || lane3 == null || road == null) {
             LOGGER.log(Level.SEVERE, "Una o più corsie o la strada non sono state correttamente inizializzate.");
@@ -68,10 +85,19 @@ public class Road extends DayNightCycle {
         }
     }
 
+    /**
+     * Restituisce un numero casuale rappresentante una delle corsie disponibili.
+     *
+     * @param random Oggetto Random per generare il numero casuale.
+     * @return Il numero della corsia scelta casualmente.
+     */
     public int getRandomLane(Random random) {
         return lanes[random.nextInt(lanes.length)];
     }
 
+    /**
+     * Inizializza il ciclo giorno-notte con le animazioni dei colori delle corsie.
+     */
     @Override
     protected void initializeDayNightCycle() {
         Timeline timeline = new Timeline(
@@ -105,15 +131,29 @@ public class Road extends DayNightCycle {
         timeline.play();
     }
 
+    /**
+     * Restituisce la griglia della strada.
+     *
+     * @return L'istanza di GridPane rappresentante la strada.
+     */
     public GridPane getRoad() {
         return road;
     }
-    public Veicolo getVeicolo() {
-        return vehicleManager.getVeicolo();
-    }
+
+    /**
+     * Restituisce il gestore dei veicoli associato alla strada.
+     *
+     * @return L'istanza di VeicoloManager.
+     */
     public VeicoloManager getVeicoloManager() {
         return this.vehicleManager;
     }
+
+    /**
+     * Restituisce il gestore degli ostacoli associato alla strada.
+     *
+     * @return L'istanza di ObstacleManager.
+     */
     public ObstacleManager getObstacleManager() {
         return this.obstacleManager;
     }

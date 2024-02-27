@@ -19,7 +19,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * La classe ObstacleManager gestisce la generazione e il movimento degli ostacoli sulla strada.
+ */
 public class ObstacleManager {
+
     private final GridPane road;
     private final List<Obstacle> obstacles;
     private final Road roadController;
@@ -29,6 +33,15 @@ public class ObstacleManager {
     private ScheduledExecutorService obstacleSpawner = Executors.newSingleThreadScheduledExecutor();
     private static final Logger LOGGER = Logger.getLogger(ObstacleManager.class.getName());
 
+    /**
+     * Costruttore della classe ObstacleManager.
+     *
+     * @param road           La griglia che rappresenta la strada.
+     * @param obstacles      La lista degli ostacoli disponibili per la generazione.
+     * @param roadController Il controller della strada.
+     * @param vehicleManager Il gestore dei veicoli.
+     * @param gameManager    L'interfaccia del gestore di gioco.
+     */
     public ObstacleManager(GridPane road, List<Obstacle> obstacles, Road roadController, VeicoloManager vehicleManager, GameManagerInterface gameManager) {
         this.road = road;
         this.obstacles = obstacles;
@@ -37,6 +50,11 @@ public class ObstacleManager {
         this.gameManager = gameManager;
     }
 
+    /**
+     * Genera un nuovo ostacolo sulla strada.
+     *
+     * @param random Il generatore casuale utilizzato per la scelta dell'ostacolo e della corsia.
+     */
     public void spawnObstacle(Random random) {
         if (!gameManager.isGameRunning()) return;
         try {
@@ -54,7 +72,7 @@ public class ObstacleManager {
 
                 CollisionManager collisionManager = gameManager.getCollisionManager();
                 obstacleView.boundsInParentProperty().addListener((observable, oldBounds, newBounds) -> Platform.runLater(() -> {
-                    ImageView vehicleNode = vehicleManager.getVehicleNode();
+                    ImageView vehicleNode = vehicleManager.getVistaVeicolo();
                     if (vehicleNode != null) {
                         collisionManager.handleCollision(gameManager, newBounds, vehicleNode, obstacleView);
                     }
@@ -93,16 +111,27 @@ public class ObstacleManager {
         road.getChildren().remove(obstacleView);
     }
 
+    /**
+     * Avvia la generazione continua degli ostacoli sulla strada.
+     */
     public void startObstacleGeneration() {
         obstacleSpawner = Executors.newSingleThreadScheduledExecutor();
         long speedFactor = gameManager.getRadiocomando().getMarciaAttuale();
-        long msInterval = speedFactor * 5000;
-        obstacleSpawner.scheduleAtFixedRate(() -> spawnObstacle(new Random()), 1, msInterval, TimeUnit.MILLISECONDS);    }
+        obstacleSpawner.scheduleAtFixedRate(() -> spawnObstacle(new Random()), 1, 5 / speedFactor, TimeUnit.SECONDS);
+    }
 
+    /**
+     * Interrompe la generazione degli ostacoli sulla strada.
+     */
     public void stopObstacleGeneration() {
         obstacleSpawner.shutdown();
     }
 
+    /**
+     * Restituisce la lista delle animazioni degli ostacoli.
+     *
+     * @return La lista delle animazioni degli ostacoli.
+     */
     public List<TranslateTransition> getAnimations() {
         return animations;
     }
