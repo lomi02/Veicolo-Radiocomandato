@@ -131,7 +131,7 @@ Il package di Radiocomando contiene:
 
 ![Vehicle UML](images/Vehicle.png)
 
-Il package di Scena contiene:
+Il package di Vehicle contiene:
 
 - Veicolo
 - VeicoloManager
