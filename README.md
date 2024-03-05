@@ -1,7 +1,7 @@
 # Veicolo Radiocomandato
 
 Link Documentazione
-https://lomi02.github.io/Veicolo-Radiocomandato/#gioco
+https://lomi02.github.io/Veicolo-Radiocomandato/
 
 Progetto Universitario Programmazione 3 2023/2024
 
